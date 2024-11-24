@@ -1,0 +1,212 @@
+fileFormatVersion: 2
+guid: da6e68656a57cb24f9692c7b734aecd0
+ModelImporter:
+  serializedVersion: 20200
+  internalIDToNameTable: []
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Adorno_Superior
+    second: {fileID: 2100000, guid: 6307a8ff7ed35414d882235bed4f7348, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Adorno_Superior.001
+    second: {fileID: 2100000, guid: 042cb7ad2e11777428b8b5785470cff1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Adorno_Ventana_Inferior
+    second: {fileID: 2100000, guid: f046de19698b75548b3daeb37b92653f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Cartel_Ayuntamiento
+    second: {fileID: 2100000, guid: 0349c505f3ca6814290d20c6ae8cad6d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Cartel_Detalle
+    second: {fileID: 2100000, guid: 002240bdbe590ba4681d5d3c6a5846c1, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Columnas
+    second: {fileID: 2100000, guid: 8439ff6fa79b43c419374d83ee799b9b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Correo
+    second: {fileID: 2100000, guid: cc7d1989c56e7fb48841a25a6809e8aa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Escalera_Rampa
+    second: {fileID: 2100000, guid: 8ed9e5b343e0b1741b6f313d037f1003, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Escudo
+    second: {fileID: 2100000, guid: acab5140b134d314ba619ace97d7e071, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Fachada
+    second: {fileID: 2100000, guid: 5436070ee6a32ea4ab40abe2d448700f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Madera_Ventanas
+    second: {fileID: 2100000, guid: 71f145fda98abc548b6d5780dc4bc388, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Marco_Puerta
+    second: {fileID: 2100000, guid: 7faafae052e0f314ea3a2a22fed48a9a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Pomo
+    second: {fileID: 2100000, guid: 528c8a76257083046a8eb0cc37f6cb5b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Puerta_Principal
+    second: {fileID: 2100000, guid: a21dbbccef1668a42bcac4975235e9e9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Tablon
+    second: {fileID: 2100000, guid: 070b8e435797df540a392c03c505b368, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Tablon_Detalle
+    second: {fileID: 2100000, guid: c13301f71767f37438e107c3e3def2e9, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Tejas
+    second: {fileID: 2100000, guid: 794e4e398bf77bb4492795a9fe7768b2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Texto
+    second: {fileID: 2100000, guid: 10212fbba2567a748a21ff5e42dd6eb4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "Ayuntamiento_Benarraba_Tuber\xEDa"
+    second: {fileID: 2100000, guid: 999c7c0f74ae0ea448adca0412d6414d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Varandillas
+    second: {fileID: 2100000, guid: 27bd63830e238d547a6e10fd4eee220f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Benarraba_Ventanas
+    second: {fileID: 2100000, guid: c2e817b34bb6f6843bc33caf26b99e82, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Ayuntamiento_Superior_Ventana_Superior
+    second: {fileID: 2100000, guid: f5bb57aa0bed0a145826e1366dc9d6f8, type: 2}
+  materials:
+    materialImportMode: 2
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 0
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    fileIdsGeneration: 2
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    keepQuads: 0
+    weldVertices: 1
+    bakeAxisConversion: 0
+    preserveHierarchy: 0
+    skinWeightsMode: 0
+    maxBonesPerVertex: 4
+    minBoneWeight: 0.001
+    meshOptimizationFlags: -1
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVMarginMethod: 1
+    secondaryUVMinLightmapResolution: 40
+    secondaryUVMinObjectScale: 1
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  referencedClips: []
+  importAnimation: 1
+  humanDescription:
+    serializedVersion: 3
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    globalScale: 1
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
+  animationType: 2
+  humanoidOversampling: 1
+  avatarSetup: 0
+  addHumanoidExtraRootOnlyWhenUsingAvatar: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
