@@ -59,7 +59,7 @@ public class WeaponController : MonoBehaviour
     public void Shoot()
     {
         lastShootTime = Time.time;
-
+        Debug.Log("Shooting");
         //reduce the Ammo
         if (!infiniteAmmo) currentAmmo--;
 
