@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -59,13 +60,21 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float lookSensitivity = 1f;
     [Tooltip("Max angle of camera rotation when looking up and down")]
     [SerializeField] private float maxLookAngle = 80f;
+    private bool isFirstPersonCamera = true;
+    private CinemachineCamera firstPersonCamera;
+    private CinemachineCamera thirdPersonCamera;
     #endregion
 
     #region Event Functions
+    private void Awake()
+    {
+        firstPersonCamera = transform.Find("FirstPersonCamera").GetComponent<CinemachineCamera>();
+        thirdPersonCamera = transform.Find("ThirdPersonCamera").GetComponent<CinemachineCamera>();
+    }
     private void Start()
     {
         characterController = GetComponent<CharacterController>();
-        cameraTransform = Camera.main.transform;
+        cameraTransform = transform.Find("FirstPersonCamera");
         weaponController = GetComponent<WeaponController>();
 
         //Hide Cursor
@@ -148,6 +157,24 @@ public class PlayerMovement : MonoBehaviour
         
         if (weaponController.CanShoot() && context.started) weaponController.Shoot();
         
+    }
+
+    public void ChangeCamera(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
+            isFirstPersonCamera = !isFirstPersonCamera;
+
+            if (isFirstPersonCamera)
+            {
+                firstPersonCamera.Priority = 10;
+                thirdPersonCamera.Priority = 0;
+            } else
+            {
+                firstPersonCamera.Priority = 0;
+                thirdPersonCamera.Priority = 10;
+            }
+        }
     }
 
     /// <summary>
