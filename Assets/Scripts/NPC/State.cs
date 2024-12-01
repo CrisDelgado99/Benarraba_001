@@ -48,13 +48,25 @@ public class State
 
     public State Process()
     {
-        if (stage == EVENT.ENTER) Enter();
-        if (stage == EVENT.UPDATE) Update();
+        Debug.Log("Processing state: " + this.GetType().Name + " with stage: " + stage);
+
+        if (stage == EVENT.ENTER)
+        {
+            Enter();
+        }
+
+        if (stage == EVENT.UPDATE)
+        {
+            Update();
+        }
+
         if (stage == EVENT.EXIT)
         {
             Exit();
-            return nextState; //If I exit, I return next state
+            Debug.Log("Exiting " + this.GetType().Name + ", nextState: " + nextState?.GetType().Name);
+            return nextState; // Transition to next state
         }
+
         return this; //If I don't exit, I return this state
     }
 }
