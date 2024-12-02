@@ -11,7 +11,7 @@ public class ZombiePursueNpc : State
     : base(npc, agent, anim, player, personTransformList, zombieTransformList)
     {
         this.personTransform = personTransform;
-        name = STATE.PERSONESCAPE;
+        name = STATE.ZOMBIEPURSUENPC;
 
         npcController = npc.GetComponent<NPCController>();
     }
@@ -33,6 +33,13 @@ public class ZombiePursueNpc : State
         if (!npcController.IsZombie)
         {
             nextState = new PersonMove(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
+            stage = EVENT.EXIT;
+        }
+
+        if (Vector3.Distance(npc.transform.position, personTransform.position) < 1)
+        {
+            Transform personTransform = npcController.NearestNpcOfTypeTransform(LevelManager.Instance.personTransformList, 10);
+            nextState = new ZombieAttackNpc(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList, personTransform);
             stage = EVENT.EXIT;
         }
 

@@ -58,7 +58,7 @@ public class ZombieMove : State
             stage = EVENT.EXIT;
         }
 
-        if (Vector3.Distance(npc.transform.position, playerTransform.position) > 10)
+        if (Vector3.Distance(npc.transform.position, playerTransform.position) < 10)
         {
             nextState = new ZombiePursuePlayer(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;

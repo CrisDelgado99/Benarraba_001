@@ -6,6 +6,7 @@ public class AI : MonoBehaviour
 {
     private NavMeshAgent agent;
     private Animator npcAnimator;
+    private NPCController npcController;
     [SerializeField] private Transform playerTransform;
     private State currentState;
 
@@ -13,8 +14,17 @@ public class AI : MonoBehaviour
     {
         agent = GetComponent<NavMeshAgent>();
         npcAnimator = GetComponentInChildren<Animator>();
+        npcController = GetComponent<NPCController>();
 
-        currentState = new PersonIdle(this.gameObject, agent, npcAnimator, playerTransform, LevelManager.Instance.personTransformList, LevelManager.Instance.zombieTransformList);
+        if (npcController.IsZombie)
+        {
+            currentState = new ZombieIdle(this.gameObject, agent, npcAnimator, playerTransform, LevelManager.Instance.personTransformList, LevelManager.Instance.zombieTransformList);
+        }
+        else
+        {
+            currentState = new PersonIdle(this.gameObject, agent, npcAnimator, playerTransform, LevelManager.Instance.personTransformList, LevelManager.Instance.zombieTransformList);
+        }
+        
     }
 
     private void Update()

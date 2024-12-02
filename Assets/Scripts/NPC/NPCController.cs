@@ -5,11 +5,12 @@ using System.Collections.Generic;
 public class NPCController : MonoBehaviour
 {
     [SerializeField] private bool isZombie = false;
+    public bool IsZombie { get => isZombie; set => isZombie = value; }
+
     [SerializeField] private Material zombieMaterial;
     public Material ZombieMaterial { get => zombieMaterial; }
     [SerializeField] private Material personMaterial;
     public Material PersonMaterial { get => personMaterial; }
-    public bool IsZombie { get =>  isZombie; }
 
     [SerializeField] private GameObject personCheckpointsParent;
     [SerializeField] private GameObject zombieCheckpointsParent;
