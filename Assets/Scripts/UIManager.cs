@@ -1,5 +1,5 @@
 using System.Collections;
-
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,6 +20,9 @@ public class UIManager : MonoBehaviour
 
     private Coroutine disappearCoroutine;
 
+    [SerializeField] private TextMeshProUGUI zombieCounterText;
+    [SerializeField] private TextMeshProUGUI personCounterText;
+
     #endregion
 
     #region Event Functions
@@ -34,7 +37,8 @@ public class UIManager : MonoBehaviour
 
     private void Update()
     {
-        ManageStaminaBar(); 
+        ManageStaminaBar();
+        UpdateCounters();
     }
     #endregion
 
@@ -96,6 +100,12 @@ public class UIManager : MonoBehaviour
         }
 
         Debug.Log("DamageOff");
+    }
+
+    private void UpdateCounters()
+    {
+        zombieCounterText.text = LevelManager.Instance.zombieTransformList.Count.ToString("Zombies: 000");
+        personCounterText.text = LevelManager.Instance.personTransformList.Count.ToString("People: 000");
     }
     #endregion
 }
