@@ -3,7 +3,9 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private int currentLives;
+    public int CurrentLives { get => currentLives; }
     [SerializeField] private int maxLives;
+    public int MaxLives { get => maxLives; }
 
     private void Awake()
     {

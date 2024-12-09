@@ -1,11 +1,20 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using static State;
+using Unity.VisualScripting;
+using UnityEngine.InputSystem.HID;
 
 public class NPCController : MonoBehaviour
 {
     [SerializeField] private bool isZombie = false;
     public bool IsZombie { get => isZombie; set => isZombie = value; }
+    private bool isAttacking = false;
+    public bool IsAttacking { get => isAttacking; set => isAttacking = value; }
+
+    private Transform attackingZombie = null;
+    public Transform AttackingZombie { get => attackingZombie; set => attackingZombie = value; }
+
 
     [SerializeField] private Material zombieMaterial;
     public Material ZombieMaterial { get => zombieMaterial; }
@@ -13,32 +22,85 @@ public class NPCController : MonoBehaviour
     public Material PersonMaterial { get => personMaterial; }
 
     [SerializeField] private GameObject personCheckpointsParent;
-    [SerializeField] private GameObject zombieCheckpointsParent;
+    [SerializeField] private GameObject zombieGroupOfCheckpointsParent;
 
     private List<GameObject> personCheckpointsList = new();
     public List<GameObject> PersonCheckpointsList { get => personCheckpointsList; }
 
-
-    private List<GameObject> zombieCheckpointsList = new();
-    public List<GameObject> ZombieCheckpointsList { get => zombieCheckpointsList; }
+    private List<List<GameObject>> zombieGroupOfCheckpointsList = new();
+    public List<List<GameObject>> ZombieGroupOfCheckpointsList { get => zombieGroupOfCheckpointsList; }
 
     private void Start()
     {
         if (personCheckpointsParent != null)
         {
-            foreach (Transform child in personCheckpointsParent.transform)
+            foreach (Transform checkpoint in personCheckpointsParent.transform)
             {
-                personCheckpointsList.Add(child.gameObject);
+                personCheckpointsList.Add(checkpoint.gameObject);
+                checkpoint.gameObject.GetComponent<MeshRenderer>().enabled = false;
             }
         }
 
-        if (zombieCheckpointsParent != null)
+        if (zombieGroupOfCheckpointsParent != null)
         {
-            foreach (Transform child in zombieCheckpointsParent.transform)
+            foreach (Transform group in zombieGroupOfCheckpointsParent.transform)
             {
-                zombieCheckpointsList.Add(child.gameObject);
+                List<GameObject> groupCheckpoints = new();
+
+                foreach (Transform checkpoint in group)
+                {
+                    groupCheckpoints.Add(checkpoint.gameObject);
+                    checkpoint.gameObject.GetComponent<MeshRenderer>().enabled = false;
+                }
+
+                zombieGroupOfCheckpointsList.Add(groupCheckpoints);
+            }
+
+        }
+    }
+
+    public int GetClosestGroupIndex(List<List<GameObject>> groupList, Transform npcTransform)
+    {
+        if (groupList.Count == 0)
+        {
+            return -1;
+        }
+
+        int closestGroupIndex = 0;
+        float closestDistance = float.MaxValue;
+
+        Vector3 npcPosition = npcTransform.position;
+
+        for (int i = 0; i < groupList.Count; i++)
+        {
+            Vector3 groupCenter = GetGroupCenter(groupList[i]);
+
+            float distance = Vector3.Distance(npcPosition, groupCenter);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestGroupIndex = i;
             }
         }
+
+        return closestGroupIndex;
+    }
+
+    private Vector3 GetGroupCenter(List<GameObject> group)
+    {
+        if (group.Count == 0)
+            return Vector3.zero;
+
+        Vector3 groupCenter = Vector3.zero;
+
+        // Calculate the average world position of all the objects in the group
+        foreach (GameObject obj in group)
+        {
+            groupCenter += obj.transform.position;
+        }
+
+        // Return the average position as the center of the group
+        return groupCenter / group.Count;
     }
 
     public int GetClosestCheckpointIndex(List<GameObject> checkpointsList)
@@ -89,4 +151,44 @@ public class NPCController : MonoBehaviour
             childRenderer.material = spriteMaterial;
         }
     }
+
+    public bool IsTransformInFOV(Transform otherTransform, float maxAngle)
+    {
+        Vector3 directionToTransform = otherTransform.position - transform.position;
+        float angle = Vector3.Angle(transform.forward, directionToTransform);
+
+        return angle < maxAngle;
+    }
+
+    public void LookAtWithNoYRotation(Transform currentDestination)
+    {
+        transform.LookAt(new Vector3(currentDestination.transform.position.x, transform.position.y, currentDestination.transform.position.z));
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        NPCController otherNpcController = other.GetComponent<NPCController>();
+        if(otherNpcController != null)
+        {
+            if (otherNpcController.IsZombie)
+            {
+                this.attackingZombie = other.transform;
+            }
+        }
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+
+        NPCController otherNpcController = other.GetComponent<NPCController>();
+        if (otherNpcController != null)
+        {
+            if (otherNpcController.IsZombie)
+            {
+                this.attackingZombie = null;
+            }
+        }
+    }
+
 }

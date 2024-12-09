@@ -31,15 +31,16 @@ public class ZombieIdle : State
 
     public override void Update()
     {
+        //Set npc as person instead of zombie if has been saved---------------------------------------------------------------------------------------------
         if (!npcController.IsZombie)
         {
             nextState = new PersonMove(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;
         }
 
+        //Go from Idle to Move------------------------------------------------------------------------------------------------------------
         timeSpentInState += Time.deltaTime;
         
-        //Go from Idle to move
         if (timeSpentInState >= timeToTransition)
         {
             //3 out of 10 times, change the nextState to PersonMove and call stage EXIT
@@ -47,23 +48,21 @@ public class ZombieIdle : State
             stage = EVENT.EXIT;
         }
 
-        if (Vector3.Distance(npc.transform.position, playerTransform.position) < 10)
+        //Pursue player if player is near and in FOV------------------------------------------------------------------------------------------------
+        if (Vector3.Distance(npc.transform.position, playerTransform.position) < 10 && npcController.IsTransformInFOV(playerTransform, 60))
         {
             nextState = new ZombiePursuePlayer(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;
         }
 
-        if (npcController.NearestNpcOfTypeTransform(LevelManager.Instance.personTransformList, 10) != null)
+        //Pursue NPC if NPC is near and in FOV------------------------------------------------------------------------------------------------
+        Transform zombieTransform = npcController.NearestNpcOfTypeTransform(LevelManager.Instance.personTransformList, 10);
+        if (zombieTransform != null && npcController.IsTransformInFOV(zombieTransform, 60))
         {
-            Transform zombieTransform = npcController.NearestNpcOfTypeTransform(LevelManager.Instance.personTransformList, 10);
             nextState = new ZombiePursueNpc(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList, zombieTransform);
             stage = EVENT.EXIT;
         }
 
-        if (stage != EVENT.EXIT)
-        {
-            base.Update(); //Continue on Update while it doesn't have to exit
-        }
     }
 
     public override void Exit()

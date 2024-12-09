@@ -30,39 +30,43 @@ public class ZombiePursueNpc : State
 
     public override void Update()
     {
+        //Set npc as person instead of zombie if has been saved----------------------------------------------------------------------------
         if (!npcController.IsZombie)
         {
             nextState = new PersonMove(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;
         }
 
+        //Attack npc if it is less than 1 away-------------------------------------------------------------------------------------------
         if (Vector3.Distance(npc.transform.position, personTransform.position) < 1)
         {
-            Transform personTransform = npcController.NearestNpcOfTypeTransform(LevelManager.Instance.personTransformList, 10);
-            nextState = new ZombieAttackNpc(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList, personTransform);
-            stage = EVENT.EXIT;
+            if(personTransform != null)
+            {
+                nextState = new ZombieAttackNpc(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList, personTransform);
+                stage = EVENT.EXIT;
+            }
         }
 
-        if (Vector3.Distance(npc.transform.position, personTransform.position) > 10)
+        //Stop following npc if it gets out of range or FOV--------------------------------------------------------------------------------
+        if (Vector3.Distance(npc.transform.position, personTransform.position) > 10 || !npcController.IsTransformInFOV(personTransform, 60))
         {
             nextState = new ZombieMove(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;
         }
 
-        if (Vector3.Distance(npc.transform.position, playerTransform.position) < 7)
+        //Start following player if it is near and in FOV--------------------------------------------------------------------------------
+        if (Vector3.Distance(npc.transform.position, playerTransform.position) < 10 && npcController.IsTransformInFOV(playerTransform, 60))
         {
             nextState = new ZombiePursuePlayer(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;
         }
 
+        //Actual movement of this State
         Vector3 directionTowardsNpc = (personTransform.position - npc.transform.position).normalized;
-        float pursuingSpeed = 3f;
+        float pursuingSpeed = 2f;
         npc.transform.position += pursuingSpeed * Time.deltaTime * directionTowardsNpc;
+        npcController.LookAtWithNoYRotation(personTransform);
 
-        if (stage != EVENT.EXIT)
-        {
-            base.Update(); //Continue on Update while it doesn't have to exit
-        }
     }
 
     public override void Exit()

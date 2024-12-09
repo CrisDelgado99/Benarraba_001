@@ -28,26 +28,31 @@ public class ZombiePursuePlayer : State
 
     public override void Update()
     {
+        //Set npc as person instead of zombie if has been saved----------------------------------------------------------------------------
         if (!npcController.IsZombie)
         {
             nextState = new PersonMove(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;
         }
 
-        if (Vector3.Distance(npc.transform.position, playerTransform.position) > 10)
+        if(Vector3.Distance(npc.transform.position, playerTransform.position) < 1)
+        {
+            nextState = new ZombieAttackingPlayer(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
+            stage = EVENT.EXIT;
+        }
+
+        //Stop following player if it is too far or out of FOV------------------------------------------------------------------------------
+        if (Vector3.Distance(npc.transform.position, playerTransform.position) > 10 || !npcController.IsTransformInFOV(playerTransform, 60))
         {
             nextState = new ZombieMove(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;
         }
 
+        //Actual movement of the state
         Vector3 directionTowardsPlayer = (playerTransform.position - npc.transform.position).normalized;
-        float pursuingSpeed = 3f;
+        float pursuingSpeed = 2.5f;
         npc.transform.position += pursuingSpeed * Time.deltaTime * directionTowardsPlayer;
-
-        if (stage != EVENT.EXIT)
-        {
-            base.Update(); //Continue on Update while it doesn't have to exit
-        }
+        npcController.LookAtWithNoYRotation(playerTransform);
     }
 
     public override void Exit()

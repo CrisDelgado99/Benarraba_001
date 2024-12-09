@@ -27,9 +27,7 @@ public class ZombieAttackNpc : State
 
         agent.isStopped = true;
 
-        personTransform.GetComponent<NPCController>().IsZombie = true;
-        LevelManager.Instance.personTransformList.Remove(personTransform);
-        LevelManager.Instance.zombieTransformList.Add(personTransform);
+        npcController.IsAttacking = true;
 
         base.Enter(); //After everything is done, set state to update
     }
@@ -43,14 +41,10 @@ public class ZombieAttackNpc : State
             nextState = new ZombieMove(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;
         }
-
-        if (stage != EVENT.EXIT)
-        {
-            base.Update(); //Continue on Update while it doesn't have to exit
-        }
     }
 
-    public override void Exit() { 
+    public override void Exit() {
+        npcController.IsAttacking = false;
         base.Exit();
     }
 }

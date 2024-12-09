@@ -22,9 +22,17 @@ public class PersonBeingAttacked : State
         //npcAnimator.SetTrigger("isBeingAttacked");
         //npcAnimator.SetTrigger("isPerson");
 
-        npcController.SetSpriteColor(npcController.PersonMaterial);
+        Debug.Log("I am " + npc.name + " and I am being attacked");
 
         agent.isStopped = true;
+
+        npcController.SetSpriteColor(npcController.PersonMaterial);
+
+        npcController.IsZombie = true;
+        LevelManager.Instance.personTransformList.Remove(npc.transform);
+        LevelManager.Instance.zombieTransformList.Add(npc.transform);
+
+        npcController.AttackingZombie = null;
 
         base.Enter();
     }

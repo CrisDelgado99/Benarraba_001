@@ -10,15 +10,9 @@ public class BulletController : MonoBehaviour
     private float shootTime;
 
     [Header("Particles")]
-    //[SerializeField] private GameObject bloodParticle;
-    //[SerializeField] private GameObject impactParticle;
+    [SerializeField] private GameObject healParticle;
+    [SerializeField] private GameObject impactParticle;
 
-    private bool isPlayer;
-    public bool IsPlayer { get => isPlayer; set => isPlayer = value; }
-
-    private int damage;
-
-    public int Damage { get => damage; set => damage = value; }
     #endregion
 
     #region Event Functions
@@ -32,25 +26,22 @@ public class BulletController : MonoBehaviour
     {
         gameObject.SetActive(false);
 
-        if (other.CompareTag("Enemy"))
+        if (other.CompareTag("npc"))
         {
-            if (isPlayer)
+            if (other.GetComponent<NPCController>().IsZombie)
             {
-                //Instantiate damageParticle "Blood"
-                //Instantiate(bloodParticle, transform.position, Quaternion.identity);
-                other.GetComponent<EnemyController>().DamageEnemy(damage);
-            }
-            
-        } else if(other.CompareTag("Player")){
-            if (!isPlayer)
+                other.GetComponent<NPCController>().IsZombie = false;
+                LevelManager.Instance.zombieTransformList.Remove(other.transform);
+                LevelManager.Instance.personTransformList.Add(other.transform);
+                Instantiate(healParticle, transform.position, Quaternion.identity);
+            } else
             {
-                //Instantiate(bloodParticle, transform.position, Quaternion.identity);
-                other.GetComponent<PlayerController>().DamagePlayer(damage);
+                Instantiate(healParticle, transform.position, Quaternion.identity);
             }
 
         } else
         {
-            //Instantiate(impactParticle, transform.position, Quaternion.identity);
+            Instantiate(impactParticle, transform.position, Quaternion.identity);
         }
     }
     #endregion

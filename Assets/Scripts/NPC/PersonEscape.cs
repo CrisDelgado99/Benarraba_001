@@ -15,8 +15,6 @@ public class PersonEscape : State
 
         npcController = npc.GetComponent<NPCController>();
 
-        fleeingSpeed = Random.Range(2.0f, 3.5f);
-
         //Agent settings
         agent.isStopped = false;
     }
@@ -29,13 +27,15 @@ public class PersonEscape : State
         npcController.SetSpriteColor(npcController.PersonMaterial);
 
         agent.isStopped = false;
+        fleeingSpeed = Random.Range(2.0f, 5f);
 
         base.Enter();
     }
 
     public override void Update()
     {
-        if (Vector3.Distance(npc.transform.position, zombieTransform.position) < 1)
+        Transform zombieAttackingTransform = npcController.AttackingZombie;
+        if (zombieAttackingTransform != null && zombieAttackingTransform.gameObject.GetComponent<NPCController>().IsAttacking)
         {
             nextState = new PersonBeingAttacked(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;
@@ -56,7 +56,10 @@ public class PersonEscape : State
         Vector3 directionAwayFromZombie = (npc.transform.position - zombieTransform.position).normalized;
         
         npc.transform.position +=  fleeingSpeed * Time.deltaTime * directionAwayFromZombie;
-     
+
+        Vector3 lookDirection = npc.transform.position + directionAwayFromZombie;
+        npc.transform.LookAt(new Vector3(lookDirection.x, npc.transform.position.y, lookDirection.z));
+
 
         if (stage != EVENT.EXIT)
         {

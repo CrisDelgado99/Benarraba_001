@@ -7,7 +7,7 @@ public class State
 {
     public enum STATE
     {
-        PERSONIDLE, PERSONMOVE, PERSONESCAPE, PERSONBEINGATTACKED, ZOMBIEIDLE, ZOMBIEMOVE, ZOMBIEPURSUEPLAYER, ZOMBIEPURSUENPC, ZOMBIEATTACKPLAYER, ZOMBIEATTACKNPC
+        PERSONIDLE, PERSONMOVE, PERSONESCAPE, PERSONBEINGATTACKED, ZOMBIEIDLE, ZOMBIEMOVE, ZOMBIEPURSUEPLAYER, ZOMBIEPURSUENPC, ZOMBIEATTACKINGPLAYER, ZOMBIEATTACKNPC
     };
 
     public enum EVENT
@@ -25,10 +25,6 @@ public class State
     protected List<Transform> personTransformList;
     protected List<Transform> zombieTransformList;
     protected State nextState;
-
-    private float visDistance = 10.0f;
-    private float visAngle = 30.0f;
-    private float attackDistance = 5.0f;
 
     //Constructor
     public State(GameObject npc, NavMeshAgent agent, Animator anim, Transform player, List<Transform> personTransformList, List<Transform> zombieTransformList)
@@ -48,8 +44,6 @@ public class State
 
     public State Process()
     {
-        Debug.Log("Processing state: " + this.GetType().Name + " with stage: " + stage);
-
         if (stage == EVENT.ENTER)
         {
             Enter();
@@ -63,7 +57,6 @@ public class State
         if (stage == EVENT.EXIT)
         {
             Exit();
-            Debug.Log("Exiting " + this.GetType().Name + ", nextState: " + nextState?.GetType().Name);
             return nextState; // Transition to next state
         }
 

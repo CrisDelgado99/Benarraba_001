@@ -49,6 +49,13 @@ public class PersonMove : State
             stage = EVENT.EXIT;
         }
 
+        Transform zombieTransform = npcController.AttackingZombie;
+        if (zombieTransform != null && zombieTransform.gameObject.GetComponent<NPCController>().IsAttacking)
+        {
+            nextState = new PersonBeingAttacked(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
+            stage = EVENT.EXIT;
+        }
+
         //Go from Move to Idle
         timeSpentInState += Time.deltaTime;
 
@@ -58,9 +65,9 @@ public class PersonMove : State
             stage = EVENT.EXIT;
         }
 
-        if (npcController.NearestNpcOfTypeTransform(LevelManager.Instance.zombieTransformList, 5) != null)
+        zombieTransform = npcController.NearestNpcOfTypeTransform(LevelManager.Instance.zombieTransformList, 5);
+        if (zombieTransform != null)
         {
-            Transform zombieTransform = npcController.NearestNpcOfTypeTransform(LevelManager.Instance.zombieTransformList, 5);
             nextState = new PersonEscape(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList, zombieTransform);
             stage = EVENT.EXIT;
         }
@@ -70,7 +77,11 @@ public class PersonMove : State
         {
             if(currentIndex >= npcController.PersonCheckpointsList.Count - 1)
             {
+                Debug.Log("I am " + npc.name + " and I got to the church");
+                LevelManager.Instance.personTransformList.Remove(npc.transform);
+                //GameManager.Instance.PlayerPoints += 300;
                 GameObject.Destroy(npc);
+                return;
             } 
             else
             {
@@ -78,11 +89,6 @@ public class PersonMove : State
             }
 
             agent.SetDestination(npcController.PersonCheckpointsList[currentIndex].transform.position);
-        }
-
-        if (stage != EVENT.EXIT)
-        {
-            base.Update(); //Continue on Update while it doesn't have to exit
         }
     }
 

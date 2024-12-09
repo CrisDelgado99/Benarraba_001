@@ -27,7 +27,7 @@ public class WeaponController : MonoBehaviour
     {
         //Check if I am a Player
         isPlayer = GetComponent<PlayerMovement>() != null;
-        
+
         //Get Object Pool Component
         objectPool = GetComponent<ObjectPool>();
     }
@@ -41,10 +41,10 @@ public class WeaponController : MonoBehaviour
     public bool CanShoot()
     {
         //Check shootingRate
-        if(Time.time - lastShootTime >= shootingRate)
+        if (Time.time - lastShootTime >= shootingRate)
         {
             //Check Ammo
-            if(currentAmmo > 0 || infiniteAmmo)
+            if (currentAmmo > 0 || infiniteAmmo)
             {
                 return true;
             }
@@ -70,45 +70,25 @@ public class WeaponController : MonoBehaviour
         bullet.transform.position = barrel.position;
         bullet.transform.rotation = barrel.rotation;
 
-        //Assign damage to bullet
-        bullet.GetComponent<BulletController>().Damage = damage;
+        //Create ray from camera to the middle of the screen
+        //Viewport is a Vector3(1, 1, 0) so this is the middle
+        Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
 
+        //Calculate direction point
+        RaycastHit hit;
+        Vector3 targetPoint;
 
-        if (isPlayer)
+        //Check if you are pointing to something and adjust the direction
+        if (Physics.Raycast(ray, out hit))
         {
-            //Create ray from camera to the middle of the screen
-            //Viewport is a Vector3(1, 1, 0) so this is the middle
-            Ray ray = Camera.main.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-
-
-            //Calculate direction point
-            RaycastHit hit;
-            Vector3 targetPoint;
-
-            //Check if you are pointing to something and adjust the direction
-            if(Physics.Raycast(ray, out hit))
-            {
-                targetPoint = hit.point;
-            } else
-            {
-                targetPoint = ray.GetPoint(5); //Get point at 5m
-            }
-
-            bullet.GetComponent<Rigidbody>().linearVelocity = (targetPoint - barrel.position).normalized * bulletSpeed;
-            bullet.GetComponent<BulletController>().IsPlayer = true;
-            
+            targetPoint = hit.point;
         }
-        //The object shooting is the enemy
         else
         {
-            //Give velocity to bullet
-            bullet.GetComponent<Rigidbody>().linearVelocity = barrel.forward * bulletSpeed;
-            bullet.GetComponent<BulletController>().IsPlayer = false;
-
+            targetPoint = ray.GetPoint(5); //Get point at 5m
         }
- 
 
-
+        bullet.GetComponent<Rigidbody>().linearVelocity = (targetPoint - barrel.position).normalized * bulletSpeed;
 
     }
     #endregion
