@@ -16,9 +16,8 @@ public class ZombiePursuePlayer : State
 
     public override void Enter()
     {
-        //npcAnimator.SetTrigger("isMoving");
-        //npcAnimator.SetTrigger("isZombie");
-
+        npcAnimator.SetTrigger("zombieWalk");
+  
         npcController.SetSpriteColor(npcController.ZombieMaterial);
 
         agent.isStopped = false;
@@ -35,7 +34,7 @@ public class ZombiePursuePlayer : State
             stage = EVENT.EXIT;
         }
 
-        if(Vector3.Distance(npc.transform.position, playerTransform.position) < 1)
+        if(Vector3.Distance(npc.transform.position, playerTransform.position) < 1.5)
         {
             nextState = new ZombieAttackingPlayer(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;
@@ -50,15 +49,14 @@ public class ZombiePursuePlayer : State
 
         //Actual movement of the state
         Vector3 directionTowardsPlayer = (playerTransform.position - npc.transform.position).normalized;
-        float pursuingSpeed = 2.5f;
+        float pursuingSpeed = 1f;
         npc.transform.position += pursuingSpeed * Time.deltaTime * directionTowardsPlayer;
         npcController.LookAtWithNoYRotation(playerTransform);
     }
 
     public override void Exit()
     {
-        //npcAnimator.ResetTrigger("isMoving");
-        //npcAnimator.ResetTrigger("isZombie");
+        npcAnimator.ResetTrigger("zombieWalk");
 
         base.Exit();
     }

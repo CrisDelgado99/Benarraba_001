@@ -23,7 +23,9 @@ public class UIManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI zombieCounterText;
     [SerializeField] private TextMeshProUGUI personCounterText;
+    [SerializeField] private TextMeshProUGUI savedCounterText;
     [SerializeField] private TextMeshProUGUI healthText;
+    [SerializeField] private TextMeshProUGUI ammoText;
 
     #endregion
 
@@ -43,6 +45,7 @@ public class UIManager : MonoBehaviour
         ManageStaminaBar();
         UpdateCounters();
         UpdatePlayerHealth();
+        UpdatePlayerAmmo();
     }
     #endregion
 
@@ -110,11 +113,17 @@ public class UIManager : MonoBehaviour
     {
         zombieCounterText.text = LevelManager.Instance.zombieTransformList.Count.ToString("Zombies: 000");
         personCounterText.text = LevelManager.Instance.personTransformList.Count.ToString("People: 000");
+        savedCounterText.text = LevelManager.Instance.NumberOfSavedPeople.ToString("Saved: 000");
     }
 
     private void UpdatePlayerHealth()
     {
         healthText.text = playerController.CurrentLives.ToString("00") + "/" + playerController.MaxLives.ToString("00");
+    }
+
+    private void UpdatePlayerAmmo()
+    {
+        //ammoText.text = 
     }
     #endregion
 }

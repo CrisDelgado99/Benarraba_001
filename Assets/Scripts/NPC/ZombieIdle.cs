@@ -18,8 +18,7 @@ public class ZombieIdle : State
 
     public override void Enter()
     {
-        //npcAnimator.SetTrigger("isIdle");
-        //npcAnimator.SetTrigger("isZombie");
+        npcAnimator.SetTrigger("zombieIdle");
 
         npcController.SetSpriteColor(npcController.ZombieMaterial);
 
@@ -67,8 +66,7 @@ public class ZombieIdle : State
 
     public override void Exit()
     {
-        //npcAnimator.ResetTrigger("isIdle");
-        //npcAnimator.ResetTrigger("isPerson");
+        npcAnimator.ResetTrigger("zombieIdle");
 
         base.Exit();
     }

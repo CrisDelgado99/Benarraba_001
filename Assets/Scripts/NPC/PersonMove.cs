@@ -27,8 +27,7 @@ public class PersonMove : State
 
     public override void Enter()
     {
-        //npcAnimator.SetTrigger("isMoving");
-        //npcAnimator.SetTrigger("isPerson");
+        npcAnimator.SetTrigger("personRun");
 
         npcController.SetSpriteColor(npcController.PersonMaterial);
 
@@ -77,7 +76,7 @@ public class PersonMove : State
         {
             if(currentIndex >= npcController.PersonCheckpointsList.Count - 1)
             {
-                Debug.Log("I am " + npc.name + " and I got to the church");
+                LevelManager.Instance.NumberOfSavedPeople++;
                 LevelManager.Instance.personTransformList.Remove(npc.transform);
                 //GameManager.Instance.PlayerPoints += 300;
                 GameObject.Destroy(npc);
@@ -94,9 +93,8 @@ public class PersonMove : State
 
     public override void Exit()
     {
-        //npcAnimator.ResetTrigger("isMoving");
-        //npcAnimator.ResetTrigger("isPerson");
-        
+        npcAnimator.ResetTrigger("personRun");
+
         base.Exit();
     }
 }

@@ -18,9 +18,8 @@ public class PersonIdle : State
 
     public override void Enter()
     {
-        //npcAnimator.SetTrigger("isIdle");
-        //npcAnimator.SetTrigger("isPerson");
-
+        npcAnimator.SetTrigger("personIdle");
+       
         npcController.SetSpriteColor(npcController.PersonMaterial);
         
         agent.isStopped = true;
@@ -69,8 +68,7 @@ public class PersonIdle : State
 
     public override void Exit()
     {
-        //npcAnimator.ResetTrigger("isIdle");
-        //npcAnimator.ResetTrigger("isPerson");
+        npcAnimator.ResetTrigger("personIdle");
         
         base.Exit();
     }

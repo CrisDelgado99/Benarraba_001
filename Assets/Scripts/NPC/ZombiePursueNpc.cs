@@ -18,8 +18,7 @@ public class ZombiePursueNpc : State
 
     public override void Enter()
     {
-        //npcAnimator.SetTrigger("isMoving");
-        //npcAnimator.SetTrigger("isZombie");
+        npcAnimator.SetTrigger("zombieWalk");
 
         npcController.SetSpriteColor(npcController.ZombieMaterial);
 
@@ -63,7 +62,7 @@ public class ZombiePursueNpc : State
 
         //Actual movement of this State
         Vector3 directionTowardsNpc = (personTransform.position - npc.transform.position).normalized;
-        float pursuingSpeed = 2f;
+        float pursuingSpeed = 1f;
         npc.transform.position += pursuingSpeed * Time.deltaTime * directionTowardsNpc;
         npcController.LookAtWithNoYRotation(personTransform);
 
@@ -71,9 +70,8 @@ public class ZombiePursueNpc : State
 
     public override void Exit()
     {
-        //npcAnimator.ResetTrigger("isMoving");
-        //npcAnimator.ResetTrigger("isZombie");
-
+        npcAnimator.ResetTrigger("zombieWalk");
+    
         base.Exit();
     }
 }

@@ -9,6 +9,9 @@ public class LevelManager : MonoBehaviour
     public List<Transform> personTransformList = new();
     public List<Transform> zombieTransformList = new ();
 
+    private int numberOfSavedPeople = 0;
+    public int NumberOfSavedPeople { get => numberOfSavedPeople; set => numberOfSavedPeople = value; }
+
     private void Awake()
     {
         Instance = this;

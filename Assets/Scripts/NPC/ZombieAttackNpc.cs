@@ -20,9 +20,8 @@ public class ZombieAttackNpc : State
 
     public override void Enter()
     {
-        //npcAnimator.SetTrigger("isAttacking");
-        //npcAnimator.SetTrigger("isZombie");
-
+        npcAnimator.SetTrigger("zombieAttack");
+       
         npcController.SetSpriteColor(npcController.ZombieMaterial);
 
         agent.isStopped = true;
@@ -44,6 +43,8 @@ public class ZombieAttackNpc : State
     }
 
     public override void Exit() {
+        npcAnimator.ResetTrigger("zombieAttack");
+
         npcController.IsAttacking = false;
         base.Exit();
     }
