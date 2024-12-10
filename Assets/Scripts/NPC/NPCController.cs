@@ -143,12 +143,28 @@ public class NPCController : MonoBehaviour
 
     public void SetSpriteColor(Material spriteMaterial)
     {
-        MeshRenderer childRenderer = transform.Find("Capsule").GetComponent<MeshRenderer>();
+        Transform child = transform.GetChild(0);
 
-        if (childRenderer != null)
+        if (child != null)
         {
-            // Set the material of the MeshRenderer to the provided material
-            childRenderer.material = spriteMaterial;
+            SkinnedMeshRenderer skinnedMeshRenderer = child.Find("Character").GetComponent<SkinnedMeshRenderer>();
+
+            Material[] materials = skinnedMeshRenderer.materials;
+
+            // Assume the skin material is named "Skin" (or replace with your specific name)
+            for (int i = 0; i < materials.Length; i++)
+            {
+                if (materials[i].name.Contains("Skin")) // Adjust the condition as needed
+                {
+                    Debug.Log(spriteMaterial);
+                    materials[i] = spriteMaterial; // Replace the skin material
+                    break;
+                }
+            }
+
+            // Reassign the updated materials array back to the renderer
+            skinnedMeshRenderer.materials = materials;
+
         }
     }
 
