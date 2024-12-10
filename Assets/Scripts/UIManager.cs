@@ -1,5 +1,5 @@
 using System.Collections;
-
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,11 +14,16 @@ public class UIManager : MonoBehaviour
     private float staminaPercentage;
 
     private PlayerMovement playerMovement;
+    private PlayerController playerController;
 
     [SerializeField] private Image damageFlash;
     [SerializeField] private float damageTime;
 
     private Coroutine disappearCoroutine;
+
+    [SerializeField] private TextMeshProUGUI zombieCounterText;
+    [SerializeField] private TextMeshProUGUI personCounterText;
+    [SerializeField] private TextMeshProUGUI healthText;
 
     #endregion
 
@@ -30,11 +35,14 @@ public class UIManager : MonoBehaviour
     private void Start()
     {
         playerMovement = FindFirstObjectByType<PlayerMovement>();
+        playerController = FindFirstObjectByType<PlayerController>();
     }
 
     private void Update()
     {
-        ManageStaminaBar(); 
+        ManageStaminaBar();
+        UpdateCounters();
+        UpdatePlayerHealth();
     }
     #endregion
 
@@ -96,6 +104,17 @@ public class UIManager : MonoBehaviour
         }
 
         Debug.Log("DamageOff");
+    }
+
+    private void UpdateCounters()
+    {
+        zombieCounterText.text = LevelManager.Instance.zombieTransformList.Count.ToString("Zombies: 000");
+        personCounterText.text = LevelManager.Instance.personTransformList.Count.ToString("People: 000");
+    }
+
+    private void UpdatePlayerHealth()
+    {
+        healthText.text = playerController.CurrentLives.ToString("00") + "/" + playerController.MaxLives.ToString("00");
     }
     #endregion
 }

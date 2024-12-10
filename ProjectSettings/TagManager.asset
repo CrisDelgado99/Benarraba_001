@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Props
   - Building
+  - npc
   layers:
   - Default
   - TransparentFX
@@ -13,10 +14,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - Terrain
+  - NonWalkableObject
+  - NPC
+  - Player
   - 
   - 
   - 
