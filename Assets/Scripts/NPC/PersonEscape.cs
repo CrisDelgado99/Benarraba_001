@@ -7,8 +7,8 @@ public class PersonEscape : State
     private Transform zombieTransform;
     private NPCController npcController;
     private float fleeingSpeed;
-    public PersonEscape(GameObject npc, NavMeshAgent agent, Animator anim, Transform player, List<Transform> personTransformList, List<Transform> zombieTransformList, Transform zombieTransform)
-    : base(npc, agent, anim, player, personTransformList, zombieTransformList)
+    public PersonEscape(GameObject npc, NavMeshAgent agent, Animator npcAnimator, Transform playerTransform, List<Transform> personTransformList, List<Transform> zombieTransformList, Transform zombieTransform)
+    : base(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList)
     {
         this.zombieTransform = zombieTransform;
         name = STATE.PERSONESCAPE;
@@ -46,7 +46,7 @@ public class PersonEscape : State
             stage = EVENT.EXIT;
         }
 
-        if (Vector3.Distance(npc.transform.position, zombieTransform.position) > 10)
+        if (Vector3.Distance(npc.transform.position, zombieTransform.position) > 5)
         {
             nextState = new PersonMove(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;

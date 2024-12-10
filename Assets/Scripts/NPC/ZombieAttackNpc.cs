@@ -9,8 +9,8 @@ public class ZombieAttackNpc : State
     private float timeSpentInState = 0f;
     private float timeToTransition = 2f;
 
-    public ZombieAttackNpc(GameObject npc, UnityEngine.AI.NavMeshAgent agent, Animator anim, Transform player, List<Transform> personTransformList, List<Transform> zombieTransformList, Transform personTransform)
-    : base(npc, agent, anim, player, personTransformList, zombieTransformList)
+    public ZombieAttackNpc(GameObject npc, NavMeshAgent agent, Animator npcAnimator, Transform playerTransform, List<Transform> personTransformList, List<Transform> zombieTransformList, Transform personTransform)
+    : base(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList)
     {
         this.personTransform = personTransform;
         name = STATE.ZOMBIEATTACKNPC;
@@ -33,6 +33,13 @@ public class ZombieAttackNpc : State
 
     public override void Update()
     {
+        //Set npc as person instead of zombie if has been saved----------------------------------------------------------------------------
+        if (!npcController.IsZombie)
+        {
+            nextState = new PersonMove(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
+            stage = EVENT.EXIT;
+        }
+
         timeSpentInState += Time.deltaTime;
 
         if (timeSpentInState >= timeToTransition)

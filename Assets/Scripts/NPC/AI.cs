@@ -7,7 +7,7 @@ public class AI : MonoBehaviour
     private NavMeshAgent agent;
     private Animator npcAnimator;
     private NPCController npcController;
-    [SerializeField] private Transform playerTransform;
+    private Transform playerTransform;
     private State currentState;
 
     private void Start()
@@ -15,6 +15,7 @@ public class AI : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         npcAnimator = transform.GetChild(0).GetComponentInChildren<Animator>();
         npcController = GetComponent<NPCController>();
+        playerTransform = GameObject.Find("Player").transform;
 
         if (npcController.IsZombie)
         {

@@ -27,12 +27,12 @@ public class State
     protected State nextState;
 
     //Constructor
-    public State(GameObject npc, NavMeshAgent agent, Animator anim, Transform player, List<Transform> personTransformList, List<Transform> zombieTransformList)
+    public State(GameObject npc, NavMeshAgent agent, Animator npcAnimator, Transform playerTransform, List<Transform> personTransformList, List<Transform> zombieTransformList)
     {
         this.npc = npc;
         this.agent = agent;
-        this.npcAnimator = anim;
-        this.playerTransform = player;
+        this.npcAnimator = npcAnimator;
+        this.playerTransform = playerTransform;
         this.personTransformList = personTransformList;
         this.zombieTransformList = zombieTransformList;
         this.stage = EVENT.ENTER;

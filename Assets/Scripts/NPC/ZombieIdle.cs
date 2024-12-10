@@ -8,8 +8,8 @@ public class ZombieIdle : State
     private float timeToTransition = 3f;
     private NPCController npcController;
 
-    public ZombieIdle(GameObject npc, NavMeshAgent agent, Animator anim, Transform player, List<Transform> personTransformList, List<Transform> zombieTransformList)
-        : base(npc, agent, anim, player, personTransformList, zombieTransformList)
+    public ZombieIdle(GameObject npc, NavMeshAgent agent, Animator npcAnimator, Transform playerTransform, List<Transform> personTransformList, List<Transform> zombieTransformList)
+        : base(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList)
     {
         name = STATE.ZOMBIEIDLE;
 
@@ -48,14 +48,14 @@ public class ZombieIdle : State
         }
 
         //Pursue player if player is near and in FOV------------------------------------------------------------------------------------------------
-        if (Vector3.Distance(npc.transform.position, playerTransform.position) < 10 && npcController.IsTransformInFOV(playerTransform, 60))
+        if (Vector3.Distance(npc.transform.position, playerTransform.position) < 6 && npcController.IsTransformInFOV(playerTransform, 60))
         {
             nextState = new ZombiePursuePlayer(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;
         }
 
         //Pursue NPC if NPC is near and in FOV------------------------------------------------------------------------------------------------
-        Transform zombieTransform = npcController.NearestNpcOfTypeTransform(LevelManager.Instance.personTransformList, 10);
+        Transform zombieTransform = npcController.NearestNpcOfTypeTransform(LevelManager.Instance.personTransformList, 6);
         if (zombieTransform != null && npcController.IsTransformInFOV(zombieTransform, 60))
         {
             nextState = new ZombiePursueNpc(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList, zombieTransform);

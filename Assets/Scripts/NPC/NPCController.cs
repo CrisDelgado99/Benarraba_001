@@ -21,24 +21,40 @@ public class NPCController : MonoBehaviour
     [SerializeField] private Material personMaterial;
     public Material PersonMaterial { get => personMaterial; }
 
-    [SerializeField] private GameObject personCheckpointsParent;
-    [SerializeField] private GameObject zombieGroupOfCheckpointsParent;
+    private GameObject personGroupOfCheckpointsParent;
+    private GameObject zombieGroupOfCheckpointsParent;
 
-    private List<GameObject> personCheckpointsList = new();
-    public List<GameObject> PersonCheckpointsList { get => personCheckpointsList; }
+    private List<List<GameObject>> personGroupOfCheckpointsList = new();
+    public List<List<GameObject>> PersonGroupOfCheckpointsList { get => personGroupOfCheckpointsList; }
 
     private List<List<GameObject>> zombieGroupOfCheckpointsList = new();
     public List<List<GameObject>> ZombieGroupOfCheckpointsList { get => zombieGroupOfCheckpointsList; }
 
     private void Start()
     {
-        if (personCheckpointsParent != null)
+        personGroupOfCheckpointsParent = GameObject.Find("GroupsOfPersonPatrolPoints");
+        zombieGroupOfCheckpointsParent = GameObject.Find("GroupsOfZombiePatrolPoints");
+
+        PopulateLists();
+    }
+
+    private void PopulateLists()
+    {
+        if (personGroupOfCheckpointsParent != null)
         {
-            foreach (Transform checkpoint in personCheckpointsParent.transform)
+            foreach (Transform group in personGroupOfCheckpointsParent.transform)
             {
-                personCheckpointsList.Add(checkpoint.gameObject);
-                checkpoint.gameObject.GetComponent<MeshRenderer>().enabled = false;
+                List<GameObject> groupCheckpoints = new();
+
+                foreach (Transform checkpoint in group)
+                {
+                    groupCheckpoints.Add(checkpoint.gameObject);
+                    //checkpoint.gameObject.GetComponent<MeshRenderer>().enabled = false;
+                }
+
+                personGroupOfCheckpointsList.Add(groupCheckpoints);
             }
+
         }
 
         if (zombieGroupOfCheckpointsParent != null)
@@ -50,7 +66,7 @@ public class NPCController : MonoBehaviour
                 foreach (Transform checkpoint in group)
                 {
                     groupCheckpoints.Add(checkpoint.gameObject);
-                    checkpoint.gameObject.GetComponent<MeshRenderer>().enabled = false;
+                    //checkpoint.gameObject.GetComponent<MeshRenderer>().enabled = false;
                 }
 
                 zombieGroupOfCheckpointsList.Add(groupCheckpoints);

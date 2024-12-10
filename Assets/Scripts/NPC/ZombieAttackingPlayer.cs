@@ -9,8 +9,8 @@ public class ZombieAttackingPlayer : State
     private float attackRate = 1f;
     private float timeSinceLastAttack = 0f;
     private int damage = 1;
-    public ZombieAttackingPlayer(GameObject npc, NavMeshAgent agent, Animator anim, Transform playerTransform, List<Transform> personTransformList, List<Transform> zombieTransformList)
-: base(npc, agent, anim, playerTransform, personTransformList, zombieTransformList)
+    public ZombieAttackingPlayer(GameObject npc, NavMeshAgent agent, Animator npcAnimator, Transform playerTransform, List<Transform> personTransformList, List<Transform> zombieTransformList)
+: base(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList)
     {
         name = STATE.ZOMBIEATTACKINGPLAYER;
 

@@ -9,8 +9,8 @@ public class PersonBeingAttacked : State
     private float timeSpentInState = 0f;
     private float timeToTransition = 2f;
 
-    public PersonBeingAttacked(GameObject npc, UnityEngine.AI.NavMeshAgent agent, Animator anim, Transform player, List<Transform> personTransformList, List<Transform> zombieTransformList)
-        :base(npc, agent, anim, player, personTransformList, zombieTransformList)
+    public PersonBeingAttacked(GameObject npc, UnityEngine.AI.NavMeshAgent agent, Animator npcAnimator, Transform playerTransform, List<Transform> personTransformList, List<Transform> zombieTransformList)
+        :base(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList)
     {
         name = STATE.PERSONBEINGATTACKED;
 

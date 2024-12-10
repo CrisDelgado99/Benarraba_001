@@ -8,8 +8,8 @@ public class PersonIdle : State
     private float timeToTransition = 3f;
     private NPCController npcController;
 
-    public PersonIdle(GameObject npc, NavMeshAgent agent, Animator anim, Transform player, List<Transform> personTransformList, List<Transform> zombieTransformList)
-        : base(npc, agent, anim, player, personTransformList, zombieTransformList)
+    public PersonIdle(GameObject npc, NavMeshAgent agent, Animator npcAnimator, Transform playerTransform, List<Transform> personTransformList, List<Transform> zombieTransformList)
+        : base(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList)
     {
         name = STATE.PERSONIDLE;
 
@@ -24,7 +24,7 @@ public class PersonIdle : State
         
         agent.isStopped = true;
         timeSpentInState = 0f;
-        timeToTransition = Random.Range(1.0f, 3.0f);
+        timeToTransition = Random.Range(1.5f, 3.5f);
         base.Enter(); //After everything is done, set state to update
     }
 
@@ -53,7 +53,7 @@ public class PersonIdle : State
             stage = EVENT.EXIT; 
         }
 
-        zombieTransform = npcController.NearestNpcOfTypeTransform(LevelManager.Instance.zombieTransformList, 5);
+        zombieTransform = npcController.NearestNpcOfTypeTransform(LevelManager.Instance.zombieTransformList, 4);
         if (zombieTransform != null)
         {
             nextState = new PersonEscape(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList, zombieTransform);

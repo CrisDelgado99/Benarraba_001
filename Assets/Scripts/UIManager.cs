@@ -111,9 +111,9 @@ public class UIManager : MonoBehaviour
 
     private void UpdateCounters()
     {
-        zombieCounterText.text = LevelManager.Instance.zombieTransformList.Count.ToString("Zombies: 000");
-        personCounterText.text = LevelManager.Instance.personTransformList.Count.ToString("People: 000");
-        savedCounterText.text = LevelManager.Instance.NumberOfSavedPeople.ToString("Saved: 000");
+        zombieCounterText.text = LevelManager.Instance.zombieTransformList.Count.ToString("000");
+        personCounterText.text = LevelManager.Instance.personTransformList.Count.ToString("000");
+        savedCounterText.text = LevelManager.Instance.NumberOfSavedPeople.ToString("000");
     }
 
     private void UpdatePlayerHealth()

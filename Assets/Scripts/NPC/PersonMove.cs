@@ -5,13 +5,15 @@ using UnityEngine.AI;
 public class PersonMove : State
 {
     NPCController npcController;
+    List<GameObject> currentGroup; // The group the zombie will move through
+    int closestGroupIndex;
     int currentIndex;
 
     private float timeSpentInState = 0f;
     private float timeToTransition = 3f;
 
-    public PersonMove(GameObject npc, NavMeshAgent agent, Animator anim, Transform player, List<Transform> personTransformList, List<Transform> zombieTransformList)
-    : base(npc, agent, anim, player, personTransformList, zombieTransformList)
+    public PersonMove(GameObject npc, NavMeshAgent agent, Animator npcAnimator, Transform playerTransform, List<Transform> personTransformList, List<Transform> zombieTransformList)
+    : base(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList)
     {
         name = STATE.PERSONMOVE;
 
@@ -35,7 +37,12 @@ public class PersonMove : State
         timeSpentInState = 0f;
         timeToTransition = Random.Range(8.0f, 10.0f);
 
-        currentIndex = npcController.GetClosestCheckpointIndex(npcController.PersonCheckpointsList);
+        // Lock onto the closest group
+        closestGroupIndex = npcController.GetClosestGroupIndex(npcController.PersonGroupOfCheckpointsList, npc.transform);
+        currentGroup = npcController.PersonGroupOfCheckpointsList[closestGroupIndex];
+
+        // Get the closest checkpoint within this group
+        currentIndex = npcController.GetClosestCheckpointIndex(currentGroup);
 
         base.Enter(); //After everything is done, set state to update
     }
@@ -64,7 +71,7 @@ public class PersonMove : State
             stage = EVENT.EXIT;
         }
 
-        zombieTransform = npcController.NearestNpcOfTypeTransform(LevelManager.Instance.zombieTransformList, 5);
+        zombieTransform = npcController.NearestNpcOfTypeTransform(LevelManager.Instance.zombieTransformList, 4);
         if (zombieTransform != null)
         {
             nextState = new PersonEscape(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList, zombieTransform);
@@ -74,7 +81,7 @@ public class PersonMove : State
         //Move between patrol points
         if (agent.remainingDistance < 1)
         {
-            if(currentIndex >= npcController.PersonCheckpointsList.Count - 1)
+            if(currentIndex >= currentGroup.Count - 1)
             {
                 LevelManager.Instance.NumberOfSavedPeople++;
                 LevelManager.Instance.personTransformList.Remove(npc.transform);
@@ -87,7 +94,7 @@ public class PersonMove : State
                 currentIndex++;
             }
 
-            agent.SetDestination(npcController.PersonCheckpointsList[currentIndex].transform.position);
+            agent.SetDestination(currentGroup[currentIndex].transform.position);
         }
     }
 

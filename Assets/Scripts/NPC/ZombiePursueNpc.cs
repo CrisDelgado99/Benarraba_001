@@ -7,8 +7,8 @@ public class ZombiePursueNpc : State
     private NPCController npcController;
     private Transform personTransform;
 
-    public ZombiePursueNpc(GameObject npc, NavMeshAgent agent, Animator anim, Transform player, List<Transform> personTransformList, List<Transform> zombieTransformList, Transform personTransform)
-    : base(npc, agent, anim, player, personTransformList, zombieTransformList)
+    public ZombiePursueNpc(GameObject npc, NavMeshAgent agent, Animator npcAnimator, Transform playerTransform, List<Transform> personTransformList, List<Transform> zombieTransformList, Transform personTransform)
+    : base(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList)
     {
         this.personTransform = personTransform;
         name = STATE.ZOMBIEPURSUENPC;
@@ -47,14 +47,14 @@ public class ZombiePursueNpc : State
         }
 
         //Stop following npc if it gets out of range or FOV--------------------------------------------------------------------------------
-        if (Vector3.Distance(npc.transform.position, personTransform.position) > 10 || !npcController.IsTransformInFOV(personTransform, 60))
+        if (Vector3.Distance(npc.transform.position, personTransform.position) > 6 || !npcController.IsTransformInFOV(personTransform, 60))
         {
             nextState = new ZombieMove(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;
         }
 
         //Start following player if it is near and in FOV--------------------------------------------------------------------------------
-        if (Vector3.Distance(npc.transform.position, playerTransform.position) < 10 && npcController.IsTransformInFOV(playerTransform, 60))
+        if (Vector3.Distance(npc.transform.position, playerTransform.position) < 6 && npcController.IsTransformInFOV(playerTransform, 60))
         {
             nextState = new ZombiePursuePlayer(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;
