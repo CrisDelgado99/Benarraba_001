@@ -13,7 +13,7 @@ public class AI : MonoBehaviour
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
-        npcAnimator = GetComponentInChildren<Animator>();
+        npcAnimator = transform.GetChild(0).GetComponentInChildren<Animator>();
         npcController = GetComponent<NPCController>();
 
         if (npcController.IsZombie)

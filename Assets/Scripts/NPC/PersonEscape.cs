@@ -21,13 +21,12 @@ public class PersonEscape : State
 
     public override void Enter()
     {
-        //npcAnimator.SetTrigger("isMoving");
-        //npcAnimator.SetTrigger("isPerson");
+        npcAnimator.SetTrigger("personRun");
 
         npcController.SetSpriteColor(npcController.PersonMaterial);
 
         agent.isStopped = false;
-        fleeingSpeed = Random.Range(2.0f, 5f);
+        fleeingSpeed = Random.Range(1.0f, 4f);
 
         base.Enter();
     }
@@ -69,8 +68,7 @@ public class PersonEscape : State
 
     public override void Exit() 
     {
-        //npcAnimator.ResetTrigger("isMoving");
-        //npcAnimator.ResetTrigger("isPerson");
+        npcAnimator.ResetTrigger("personRun");
 
         base.Exit();
     }

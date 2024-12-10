@@ -18,7 +18,7 @@ public class ZombieMove : State
         name = STATE.ZOMBIEMOVE;
 
         // Agent settings
-        agent.speed = 1f;
+        agent.speed = 0.5f;
         agent.isStopped = false;
 
         // NPC movement
@@ -27,6 +27,8 @@ public class ZombieMove : State
 
     public override void Enter()
     {
+        npcAnimator.SetTrigger("zombieWalk");
+
         npcController.SetSpriteColor(npcController.ZombieMaterial);
 
         agent.isStopped = false;
@@ -98,6 +100,8 @@ public class ZombieMove : State
 
     public override void Exit()
     {
+        npcAnimator.ResetTrigger("zombieWalk");
+
         currentGroup = null;
         currentIndex = -1;
 

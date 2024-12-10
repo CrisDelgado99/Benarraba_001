@@ -20,27 +20,30 @@ public class ZombieAttackingPlayer : State
     }
     public override void Enter()
     {
-        //npcAnimator.SetTrigger("isAttacking");
-        //npcAnimator.SetTrigger("isZombie");
+        npcAnimator.SetTrigger("zombieAttack");
 
         npcController.SetSpriteColor(npcController.ZombieMaterial);
 
         agent.isStopped = true;
         agent.speed = 0;
 
-        attackRate = 1f;
-        timeSinceLastAttack = 0f;
-
-        Debug.Log("I AM ATTACKING");
+        attackRate = 3f;
+        timeSinceLastAttack = 2f;
 
         base.Enter(); //After everything is done, set state to update
     }
 
     public override void Update()
     {
-        if (Vector3.Distance(playerTransform.position, npc.transform.position) > 1)
+        //Set npc as person instead of zombie if has been saved----------------------------------------------------------------------------
+        if (!npcController.IsZombie)
         {
-            Debug.Log("Now move");
+            nextState = new PersonMove(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
+            stage = EVENT.EXIT;
+        }
+
+        if (Vector3.Distance(playerTransform.position, npc.transform.position) > 1.5)
+        {
             nextState = new ZombieMove(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;
         }
@@ -60,6 +63,8 @@ public class ZombieAttackingPlayer : State
 
     public override void Exit()
     {
+        npcAnimator.ResetTrigger("zombieAttack");
+
         base.Exit();
     }
 }
