@@ -50,9 +50,9 @@ public class PlayerMovement : MonoBehaviour
     }
 
     [Tooltip("Quantity of stamina to be reduced when using it")]
-    [SerializeField] private float staminaReduction = 30f;
+    [SerializeField] private float staminaReduction = 25f;
     [Tooltip("Quantity of stamina to be restored when not using it")]
-    [SerializeField] private float staminaRestoration = 10f;
+    [SerializeField] private float staminaRestoration = 15f;
 
 
     //Camera look sensitivity and max angle to limit vertical rotation
@@ -260,7 +260,7 @@ public class PlayerMovement : MonoBehaviour
         {
             if (isDrowned)
             {
-                currentStamina += staminaRestoration/2 * Time.deltaTime;
+                currentStamina += staminaRestoration/1.5f * Time.deltaTime;
             } else
             {
                 // Gradually restore stamina when not sprinting
