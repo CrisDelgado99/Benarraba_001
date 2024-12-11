@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
     //Stamina quantity
     [Header("Stamina Settings")]
     [SerializeField] private int maxStamina = 130;
+
     public int MaxStamina
     {
         get => maxStamina;
@@ -63,6 +64,9 @@ public class PlayerMovement : MonoBehaviour
     private bool isFirstPersonCamera = true;
     private CinemachineCamera firstPersonCamera;
     private CinemachineCamera thirdPersonCamera;
+
+    //Animator
+    private Animator playerAnimator;
     #endregion
 
     #region Event Functions
@@ -82,6 +86,8 @@ public class PlayerMovement : MonoBehaviour
 
         //Stamina quantity at start of game
         currentStamina = maxStamina;
+
+        playerAnimator = GetComponentInChildren<Animator>();
     }
 
     private void Update()
@@ -92,6 +98,8 @@ public class PlayerMovement : MonoBehaviour
         LookAround();
         //Use stamina
         UseStamina();
+
+        playerAnimator.SetBool("isMoving", isMoving);
     }
     #endregion
 
@@ -155,7 +163,11 @@ public class PlayerMovement : MonoBehaviour
     public void Shoot(InputAction.CallbackContext context)
     {
         
-        if (weaponController.CanShoot() && context.started) weaponController.Shoot();
+        if (weaponController.CanShoot() && context.started)
+        {
+            weaponController.Shoot();
+            AudioManager.Instance.PlayShootAudio();
+        }
         
     }
 
@@ -207,6 +219,8 @@ public class PlayerMovement : MonoBehaviour
         velocity.y += gravity * Time.deltaTime;
         characterController.Move(velocity * Time.deltaTime);
 
+     
+        
     }
 
     /// <summary>

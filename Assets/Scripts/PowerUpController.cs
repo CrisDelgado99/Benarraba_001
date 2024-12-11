@@ -47,13 +47,15 @@ public class PowerUpController : MonoBehaviour
                 if (playerController.CurrentLives < playerController.MaxLives)
                 {
                     other.GetComponent<PlayerController>().CurrentLives++;
+                    AudioManager.Instance.PlayGetLifeAudio();
                     Destroy(gameObject);
                 }
             }
             else if (powerUpType == PowerUpType.AmmoBox)
             {
                 WeaponController weaponController = other.GetComponent<WeaponController>();
-                weaponController.CurrentAmmo += Random.Range(2, 7);
+                weaponController.CurrentAmmo += Random.Range(5, 9);
+                AudioManager.Instance.PlayGetAmmoAudio();
                 Destroy(gameObject);
             }
         }

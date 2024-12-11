@@ -34,14 +34,17 @@ public class BulletController : MonoBehaviour
                 LevelManager.Instance.zombieTransformList.Remove(other.transform);
                 LevelManager.Instance.personTransformList.Add(other.transform);
                 Instantiate(healParticle, transform.position, Quaternion.identity);
+                AudioManager.Instance.PlaySaveZombieAudio();
             } else
             {
                 Instantiate(healParticle, transform.position, Quaternion.identity);
+                AudioManager.Instance.PlayShatteringBottleAudio();
             }
 
         } else
         {
             Instantiate(impactParticle, transform.position, Quaternion.identity);
+            AudioManager.Instance.PlayShatteringBottleAudio();
         }
     }
     #endregion
