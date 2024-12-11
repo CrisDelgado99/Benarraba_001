@@ -49,7 +49,7 @@ public class NPCController : MonoBehaviour
                 foreach (Transform checkpoint in group)
                 {
                     groupCheckpoints.Add(checkpoint.gameObject);
-                    //checkpoint.gameObject.GetComponent<MeshRenderer>().enabled = false;
+                    checkpoint.gameObject.GetComponent<MeshRenderer>().enabled = false;
                 }
 
                 personGroupOfCheckpointsList.Add(groupCheckpoints);
@@ -66,7 +66,7 @@ public class NPCController : MonoBehaviour
                 foreach (Transform checkpoint in group)
                 {
                     groupCheckpoints.Add(checkpoint.gameObject);
-                    //checkpoint.gameObject.GetComponent<MeshRenderer>().enabled = false;
+                    checkpoint.gameObject.GetComponent<MeshRenderer>().enabled = false;
                 }
 
                 zombieGroupOfCheckpointsList.Add(groupCheckpoints);
@@ -172,7 +172,6 @@ public class NPCController : MonoBehaviour
             {
                 if (materials[i].name.Contains("Skin")) // Adjust the condition as needed
                 {
-                    Debug.Log(spriteMaterial);
                     materials[i] = spriteMaterial; // Replace the skin material
                     break;
                 }

@@ -46,7 +46,7 @@ public class PersonEscape : State
             stage = EVENT.EXIT;
         }
 
-        if (Vector3.Distance(npc.transform.position, zombieTransform.position) > 5)
+        if (zombieTransform == null || Vector3.Distance(npc.transform.position, zombieTransform.position) > 5)
         {
             nextState = new PersonMove(npc, agent, npcAnimator, playerTransform, personTransformList, zombieTransformList);
             stage = EVENT.EXIT;

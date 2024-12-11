@@ -32,4 +32,11 @@ public class LevelManager : MonoBehaviour
             }
         }
     }
+
+    private void Update()
+    {
+        if(zombieTransformList.Count == 0){
+            UIManager.Instance.ShowGameWinPanel();
+        }
+    }
 }

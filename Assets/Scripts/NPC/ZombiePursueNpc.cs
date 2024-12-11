@@ -37,7 +37,7 @@ public class ZombiePursueNpc : State
         }
 
         //Attack npc if it is less than 1 away-------------------------------------------------------------------------------------------
-        if (Vector3.Distance(npc.transform.position, personTransform.position) < 1)
+        if (personTransform == null || Vector3.Distance(npc.transform.position, personTransform.position) < 1)
         {
             if(personTransform != null)
             {

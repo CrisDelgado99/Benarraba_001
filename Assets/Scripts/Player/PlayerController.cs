@@ -3,13 +3,15 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     private int currentLives;
-    public int CurrentLives { get => currentLives; }
+    public int CurrentLives { get => currentLives; set => currentLives = value; }
+    
     [SerializeField] private int maxLives;
     public int MaxLives { get => maxLives; }
 
     private void Awake()
     {
         currentLives = maxLives;
+        Time.timeScale = 1f;
     }
 
     /// <summary>
@@ -24,8 +26,8 @@ public class PlayerController : MonoBehaviour
 
         if (currentLives <= 0)
         {
-            //TODO GamManager, HUD 
-            Debug.Log("Game Over!!");
+            UIManager.Instance.ShowGameOverPanel();
+            Time.timeScale = 0;
         }
     }
 }

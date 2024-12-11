@@ -8,7 +8,7 @@ public class WeaponController : MonoBehaviour
 
     [Header("Ammonition")]
     [SerializeField] private int currentAmmo;
-    [SerializeField] private int maxAmmo;
+    public int CurrentAmmo { get => currentAmmo; set { currentAmmo = value; } }
     [SerializeField] private bool infiniteAmmo;
 
     [Header("Performance")]

@@ -15,6 +15,7 @@ public class UIManager : MonoBehaviour
 
     private PlayerMovement playerMovement;
     private PlayerController playerController;
+    private WeaponController weaponController;
 
     [SerializeField] private Image damageFlash;
     [SerializeField] private float damageTime;
@@ -27,6 +28,10 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI healthText;
     [SerializeField] private TextMeshProUGUI ammoText;
 
+    [SerializeField] private GameObject gameOverPanel;
+    [SerializeField] private GameObject gameWinPanel;
+    [SerializeField] private GameObject crossHair;
+
     #endregion
 
     #region Event Functions
@@ -38,6 +43,11 @@ public class UIManager : MonoBehaviour
     {
         playerMovement = FindFirstObjectByType<PlayerMovement>();
         playerController = FindFirstObjectByType<PlayerController>();
+        weaponController = FindFirstObjectByType<WeaponController>();
+
+        gameOverPanel.SetActive(false);
+        gameWinPanel.SetActive(false);
+        crossHair.SetActive(true);
     }
 
     private void Update()
@@ -123,7 +133,25 @@ public class UIManager : MonoBehaviour
 
     private void UpdatePlayerAmmo()
     {
-        //ammoText.text = 
+        ammoText.text = weaponController.CurrentAmmo.ToString("000");
+    }
+
+    public void ShowGameOverPanel()
+    {
+        gameOverPanel.SetActive(true);
+        crossHair.SetActive(false);
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
+    }
+
+    public void ShowGameWinPanel()
+    {
+        gameWinPanel.SetActive(true);
+        crossHair.SetActive(false);
+
+        Cursor.visible = true;
+        Cursor.lockState = CursorLockMode.None;
     }
     #endregion
 }
