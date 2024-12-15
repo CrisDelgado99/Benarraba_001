@@ -54,7 +54,7 @@ public class PowerUpController : MonoBehaviour
             else if (powerUpType == PowerUpType.AmmoBox)
             {
                 WeaponController weaponController = other.GetComponent<WeaponController>();
-                weaponController.CurrentAmmo += Random.Range(6, 11);
+                weaponController.CurrentAmmo += Random.Range(5, 9);
                 AudioManager.Instance.PlayGetAmmoAudio();
                 Destroy(gameObject);
             }
